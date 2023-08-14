@@ -14,10 +14,6 @@ namespace dotnet_rpg.Models
         public string? Firma { get; set; }
 
         public Guid UserId { get; set; }
-
-        public static implicit operator List<object>(Customer v)
-        {
-            throw new NotImplementedException();
-        }
+  
     }
 }

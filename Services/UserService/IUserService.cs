@@ -13,9 +13,9 @@ namespace dotnet_rpg.Services.UserService
 
         List<User> CreateUser(User user);
 
-        User UpdateUser(Guid id, User request);
+        List<User> UpdateUser(Guid id, User request);
 
-        User DeleteUser(Guid id, User request);
+        List<User> DeleteUser(Guid id, User request);
 
         
     }

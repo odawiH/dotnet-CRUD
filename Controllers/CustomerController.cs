@@ -10,6 +10,10 @@ namespace dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
+      
+
+
+
         
     }
 }

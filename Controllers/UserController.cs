@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using dotnet_rpg.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_rpg.Controllers
@@ -11,84 +11,64 @@ namespace dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-         private static List<User> users = new List<User>
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            new User
-            {
-                Id = Guid.NewGuid(),
-                Name = "Gersching",
-                Abteilung = "HR",
-                Kunden = new List<Customer>
-                {
-                    new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Deniz Nezic", Firma = "Yallah IT", UserId = Guid.NewGuid() },
-                    new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Imad Ali Kkhan", Firma = "Yallah IT", UserId = Guid.NewGuid() },
-                     new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Hiwad Azekzei", Firma = "Yallah IT", UserId = Guid.NewGuid() }
-                }
-            },
-            new User
-            {
-                Id = Guid.NewGuid(),
-                Name = "Alice",
-                Abteilung = "IT",
-                Kunden = new List<Customer>
-                {
-                    new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Peter", Firma = "123 Ltd", UserId = Guid.NewGuid() }
-                }
-            },
-        
-        };
+            _userService = userService;
+            
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
-            // await Task.Delay(1000); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-            return Ok(users);
+            await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+              var result = _userService.GetUsers();
+           if(result is null) {
+                return NotFound("No Users found");
+           }
+            return Ok(result);
         }
 
           [HttpGet("{name}")]
         public async Task<ActionResult<User>> GetUser(string name)
         {
-            // await Task.Delay(1000); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-            var user = users.Find(x=>x.Name == name);
-            if(user is null) {
-                return NotFound("Sorry aber der User existiert nicht !!");
-            }
-            return Ok(user);
+            await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+              var result = _userService.GetUser(name);
+           if(result is null) {
+                return NotFound("User not found");
+           }
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<List<User>>> CreateUser(User user)
         {
-            // await Task.Delay(1000); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-            users.Add(user);
-            return Ok(users);
+            await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+           var result = _userService.CreateUser(user);
+            return Ok(result);
         }
 
         
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> UpdateUser(Guid id, User request)
+        public async Task<ActionResult<List<User>>> UpdateUser(Guid id, User request)
         {
-            // await Task.Delay(1000); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-            var user = users.Find(x=>x.Id == id);
-            if(user is null) {
-                return NotFound("Sorry aber der User existiert nicht!!");
-            }
-            user.Name = request.Name;
-            user.Abteilung = request.Abteilung;
-            user.Kunden = request.Kunden;
-            return Ok(user);
+            await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+            var result = _userService.UpdateUser(id, request);
+           if(result is null) {
+                return NotFound("User not found");
+           }
+            return Ok(result);
         }
                 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(Guid id, User request)
+        public async Task<ActionResult<List<User>>> DeleteUser(Guid id, User request)
         {
-            // await Task.Delay(1000); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-            var user = users.Find(x=>x.Id == id);
-            if(user is null) {
-                return NotFound("Sorry aber der User existiert nicht!!");
-            }
-           users.Remove(user);
-            return Ok(user);
+            await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+           var result = _userService.DeleteUser(id, request);
+           if(result is null) {
+                return NotFound("User not found");
+           }
+            return Ok(result);
         }
         
     }

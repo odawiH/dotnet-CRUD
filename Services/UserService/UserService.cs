@@ -37,27 +37,45 @@ namespace dotnet_rpg.Services.UserService
         };
         public List<User> CreateUser(User user)
         {
-            throw new NotImplementedException();
+           users.Add(user);
+            return users;
         }
 
-        public User DeleteUser(Guid id, User request)
+        public List<User> DeleteUser(Guid id, User request)
         {
-             throw new NotImplementedException();
+               var user = users.Find(x=>x.Id == id);
+            if(user is null) {
+                return null;
+            }
+           users.Remove(user);
+            return users;
         }
 
         public User GetUser(string name)
         {
-            throw new NotImplementedException();
+              var user = users.Find(x=>x.Name == name);
+            if(user is null) {
+                return  null;
+            }
+            return user;
         }
 
         public List<User> GetUsers()
         {
-            throw new NotImplementedException();
+             return users;
         }
 
-        public User UpdateUser(Guid id, User request)
+        public List<User> UpdateUser(Guid id, User request)
         {
-            throw new NotImplementedException();
+              var user = users.Find(x=>x.Id == id);
+            if(user is null) {
+                return null;
+            }
+            user.Name = request.Name;
+            user.Abteilung = request.Abteilung;
+            user.Kunden = request.Kunden;
+            return users;
+          
         }
     }
 }
