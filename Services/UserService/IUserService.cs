@@ -7,15 +7,15 @@ namespace dotnet_rpg.Services.UserService
 {
     public interface IUserService
     {
-        List<User> GetUsers();
+        Task<List<User>> GetUsers();
 
-        User GetUser(string name);
+        Task<User> GetUser(string name);
 
-        List<User> CreateUser(User user);
+        Task<List<User>> CreateUser(User user);
 
-        List<User> UpdateUser(Guid id, User request);
+        Task<List<User>> UpdateUser(Guid id, User request);
 
-        List<User> DeleteUser(Guid id, User request);
+        Task<List<User>> DeleteUser(Guid id, User request);
 
         
     }
