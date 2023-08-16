@@ -43,12 +43,18 @@ namespace dotnet_rpg.Services.UserService
         }
 
 
-        public async Task<List<User>> CreateUser(User user)
+        public async Task<User> CreateUser(User user)
         {
-           
+           user.Id = Guid.NewGuid();
+             foreach (var customer in user.Kunden)
+    {
+        customer.Id = Guid.NewGuid();
+        customer.UserId = user.Id;
+    }
+
            _context.Users.Add(user);
            await _context.SaveChangesAsync();  
-             return await _context.Users.ToListAsync();
+             return await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
         }
 
         public async Task<List<User>> DeleteUser(Guid id, User request)
@@ -64,9 +70,9 @@ namespace dotnet_rpg.Services.UserService
              return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> GetUser(string name)
+        public async Task<User> GetUser(Guid id)
         {
-              var user = await _context.Users.FindAsync(name);
+              var user = await _context.Users.FindAsync(id);
             if(user is null) {
                 return  null;
             }

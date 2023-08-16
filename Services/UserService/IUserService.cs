@@ -9,9 +9,9 @@ namespace dotnet_rpg.Services.UserService
     {
         Task<List<User>> GetUsers();
 
-        Task<User> GetUser(string name);
+        Task<User> GetUser(Guid id);
 
-        Task<List<User>> CreateUser(User user);
+        Task<User> CreateUser(User user);
 
         Task<List<User>> UpdateUser(Guid id, User request);
 

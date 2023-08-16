@@ -25,11 +25,11 @@ namespace dotnet_rpg.Controllers
             return await _userService.GetUsers();
         }
 
-          [HttpGet("{name}")]
-        public async Task<ActionResult<User>> GetUser(string name)
+          [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(Guid id)
         {
            
-              var result = await _userService.GetUser(name);
+              var result = await _userService.GetUser(id);
            if(result is null) {
                 return NotFound("User not found");
            }
