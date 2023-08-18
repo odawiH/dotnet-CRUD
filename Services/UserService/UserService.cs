@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using  dotnet_rpg.Dtos;
+using dotnet_rpg.Models;
 
 namespace dotnet_rpg.Services.UserService
 {
@@ -9,33 +11,7 @@ namespace dotnet_rpg.Services.UserService
     
     public class UserService : IUserService
     {
-        //  private static List<User> users = new List<User>
-        // {
-        //     new User
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         Name = "Gersching",
-        //         Abteilung = "HR",
-        //         Kunden = new List<Customer>
-        //         {
-        //             new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Deniz Nezic", Firma = "Yallah IT", UserId = Guid.NewGuid() },
-        //             new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Imad Ali Kkhan", Firma = "Yallah IT", UserId = Guid.NewGuid() },
-        //              new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Hiwad Azekzei", Firma = "Yallah IT", UserId = Guid.NewGuid() }
-        //         }
-        //     },
-        //     new User
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         Name = "Alice",
-        //         Abteilung = "IT",
-        //         Kunden = new List<Customer>
-        //         {
-        //             new Customer { Id = Guid.NewGuid(), Ansprechpartner = "Peter", Firma = "123 Ltd", UserId = Guid.NewGuid() }
-        //         }
-        //     },
-        
-        // };
-
+     
         private readonly DataContext _context;
 
         public UserService(DataContext context){
@@ -43,18 +19,28 @@ namespace dotnet_rpg.Services.UserService
         }
 
 
-        public async Task<User> CreateUser(User user)
+        public async Task<GetUserDto> CreateUser(CreateUserDto userDto)
         {
-           user.Id = Guid.NewGuid();
-             foreach (var customer in user.Kunden)
-    {
-        customer.Id = Guid.NewGuid();
-        customer.UserId = user.Id;
-    }
+        //    user.Id = Guid.NewGuid();
+        //      foreach (var customer in user.Kunden)
+        //         {
+        //             customer.Id = Guid.NewGuid();
+        //             customer.UserId = user.Id;
+        //         }
+            var user = new User { 
+                Id = new Guid(),
+                Name = userDto.Name,
+                Abteilung = userDto.Abteilung,
+                Kunden = new List< Customer >()
+            };
 
            _context.Users.Add(user);
            await _context.SaveChangesAsync();  
-             return await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+             return new GetUserDto { 
+                Id = user.Id,
+                Name = user.Name,
+                Abteilung = user.Abteilung
+             };
         }
 
         public async Task<List<User>> DeleteUser(Guid id, User request)

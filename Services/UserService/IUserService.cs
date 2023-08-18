@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using  dotnet_rpg.Dtos;
 
 namespace dotnet_rpg.Services.UserService
 {
@@ -11,7 +12,7 @@ namespace dotnet_rpg.Services.UserService
 
         Task<User> GetUser(Guid id);
 
-        Task<User> CreateUser(User user);
+        Task<GetUserDto> CreateUser(CreateUserDto userDto);
 
         Task<List<User>> UpdateUser(Guid id, User request);
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnet_rpg.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
+using  dotnet_rpg.Dtos;
 
 namespace dotnet_rpg.Controllers
 {
@@ -37,10 +38,10 @@ namespace dotnet_rpg.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<User>>> CreateUser(User user)
+        public async Task<ActionResult<List<GetUserDto>>> CreateUser(CreateUserDto userDto)
         {
        
-           var result = await _userService.CreateUser(user);
+           var result = await _userService.CreateUser(userDto);
             return Ok(result);
         }
 
