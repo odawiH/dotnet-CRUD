@@ -1,23 +1,23 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using dotnet_rpg.Dtos.CustomerDto;
 
-// namespace dotnet_rpg.Services.CustomerService
+namespace dotnet_rpg.Services.CustomerService
+{
+    public interface ICustomerService
+    {
+        //Task<List<User>> GetCustomer();
 
-// {
-//     public interface ICustomerService
-//     {
-//         Task<List<Customer>> GetCustomers();
+        Task<Customer> GetCustomer(Guid id);
 
-//         Task<Customer> GetCustomer(Guid id);
+        Task<GetCustomerDto> CreateCustomer(CreateCustomerDto CustomerDto);
 
-//         Task<Customer> CreateCustomer(Customer customer);
+        Task<List<Customer>> UpdateCustomer(Guid id, UpdateCustomerDto updateCustomerDtorequest );
 
-//         Task<Customer> UpdateCustomer(Guid id, Customer request);
+        Task<List<Customer>> DeleteCustomer(Guid id);
 
-//         Task<Customer> DeleteCustomer(Guid id, Customer request);
 
-        
-//     }
-// }
+    }
+}

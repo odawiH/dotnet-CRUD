@@ -2,6 +2,7 @@ global using dotnet_rpg.Models;
 global using dotnet_rpg.Data;
 
 using dotnet_rpg.Services.UserService;
+using dotnet_rpg.Services.CustomerService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped <IUserService, UserService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();

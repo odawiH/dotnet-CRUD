@@ -23,7 +23,7 @@ namespace dotnet_rpg.Data
         }
 
         public DbSet<User> Users { get; set; }
-        // public DbSet<Customer> Customer { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
     }
 }

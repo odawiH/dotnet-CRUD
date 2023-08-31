@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using dotnet_rpg.Services.CustomerService;
+using dotnet_rpg.Dtos.CustomerDto;
+
 
 namespace dotnet_rpg.Controllers
 {
@@ -10,65 +13,69 @@ namespace dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-        // private readonly ICustomerService _customerService;
-        // public CustomerController(ICustomerService customerService)
-        // {
-        //     _customerService = customerService;
-            
-        // }
+        private readonly ICustomerService _customerService;
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
 
-        // [HttpGet]
-        // public async Task<ActionResult<List<User>>> GetCustomers()
-        // {
-       
-        //     return await _customerService.GetCustomers();
-        // }
+        }
 
-        //   [HttpGet("{id}")]
-        // public async Task<ActionResult<User>> GetUser(Guid id)
-        // {
-           
-        //       var result = await _customerService.GetUser(id);
-        //    if(result is null) {
-        //         return NotFound("User not found");
-        //    }
-        //     return Ok(result);
-        // }
+        //[HttpGet]
+        //public async Task<ActionResult<List<Customer>>> GetCustomers()
+        //{
 
-        // [HttpPost]
-        // public async Task<ActionResult<List<User>>> CreateUser(User user)
-        // {
-       
-        //    var result = await _customerService.CreateUser(user);
-        //     return Ok(result);
-        // }
+        //    return await _customerService.GetCustomers();
+        //}
 
-        
-        // [HttpPut("{id}")]
-        // public async Task<ActionResult<List<User>>> UpdateUser(Guid id, User request)
-        // {
-        //     // await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
-        //     var result = await _customerService.UpdateUser(id, request);
-        //    if(result is null) {
-        //         return NotFound("User not found");
-        //    }
-        //     return Ok(result);
-        // }
-                
-        // [HttpDelete("{id}")]
-        // public async Task<ActionResult<List<User>>> DeleteUser(Guid id, User request)
-        // {
-           
-        //    var result = await _customerService.DeleteUser(id, request);
-        //    if(result is null) {
-        //         return NotFound("User not found");
-        //    }
-        //     return Ok(result);
-        // }
-       
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Customer>> GetCustomer(Guid id)
+        {
+
+            var result = await _customerService.GetCustomer(id);
+
+            if (result is null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<List<GetCustomerDto>>> CreateCustomer(CreateCustomerDto createCustomerDto)
+        {
+
+            var result = await _customerService.CreateCustomer(createCustomerDto);
+            return Ok(result);
+        }
 
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Customer>>> UpdateCustomer(Guid id, UpdateCustomerDto updateCustomerDtorequest)
+        {
+            // await Task.Delay(500); // Simuliert eine asynchrone Aufgabe (z. B. Datenbankabfrage).
+            var result = await _customerService.UpdateCustomer(id, updateCustomerDtorequest);
+            if (result is null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(result);
+        }
 
-        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Customer>>> DeleteCustomer(Guid id)
+        {
+
+            var result = await _customerService.DeleteCustomer(id);
+            if (result is null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(result);
+        }
+
+
+
+
+
     }
 }
